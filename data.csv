@@ -1,5 +1,5 @@
 Kurzname,Kommentar,direction,id,Art,x-Koordinate,y-Koordinate,z-Koordinate,Distanz vom Hub,next_node
-Nether Hub,,NA,1,POI,-95,128,-113,0,NA
+Nether Hub,,NA,1,NetherHub,-95,128,-113,0,NA
 Bartering Farm,,east,2,POI,582,128,-68,678,
 Gold Farm,,east,3,POI,623,128,-709,933,
 Gold Farm alt,,east,4,POI,87,128,-170,191,
