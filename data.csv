@@ -1,4 +1,4 @@
-Kurzname,Kommentar,direction,id,Art,x-Koordinate,y-Koordinate,z-Koordinate,Distanz vom Hub,next_node,
+Kurzname,Kommentar,direction,id,Art,x-Koordinate,y-Koordinate,z-Koordinate,Distanz vom Hub,next_node,TODO
 Nether Hub,,NA,1,NetherHub,-95,128,-113,0,1,
 Bartering Farm,,east,2,POI,582,128,-68,678,20,
 Gold Farm,,east,3,POI,623,128,-709,933,23,
@@ -68,15 +68,15 @@ Flowerforest,,west,65,POI,-732,128,48,657,68,"unsicher, ob korrekt"
 #W2,,west,67,Kreuzung,-344,128,53,299,66,
 #W3,,west,68,Kreuzung,-547,128,67,487,67,
 #W4,,west,69,Kreuzung,-706,128,320,749,67,
-Ocean (unklar),,west,70,,-750,128,350,802,69,
-Pale Garden,,,71,,-3286,128,-199,3.192,,
-Meadows-Biome (auch cherry),,,72,POI,-862,128,172,818,,
+Ocean (unklar),,west,70,POI,-750,128,350,802,69,
+Pale Garden,,west,71,POI,-3286,128,-199,3.192,77,Fackellinie noch ziehen
+Cherry Biome (auch Meadows),,west,72,POI,-862,128,172,818,78,Fackellinie noch ziehen
 NEU: Trial-Chamber,,,73,POI,-685,128,-367,642,,
 #O8,,east,74,Kreuzung,1039,128,182,1.172,25,
-,,NA,75,,,,,148,,
-,,,76,,,,,148,,
-,,,77,,,,,148,,
-,,,78,,,,,148,,
+Swamp,,west,75,POI,-2254,128,-110,2.159,61,Fackellinie noch ziehen
+Perimeter unten,,west,76,POI,-1770,128,87,1.687,61,Fackellinie noch ziehen
+Jungle,,west,77,POI,-3050,128,94,2.962,75,Fackellinie noch ziehen
+#W5,,west,78,,-806,128,64,733,65,"René hat hier eine Enderchest platziert, Schild und Fackellinie ergänzen "
 ,,,79,,,,,148,,
 ,,,80,,,,,148,,
 ,,,81,,,,,148,,
