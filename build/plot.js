@@ -3,21 +3,18 @@
 
 const parsed = Papa.parse(precsvData.trim(), { header: true });
 const rows = parsed.data;
-console.log(rows)
 
 
 const pointMap = {}; // group by art1
 const lines = [];
 
 rows.forEach(row => {
-  console.log(row)
   const name = (row['name1'] || '').trim();
   const art = (row['art1'] || '').trim();
   const x = parseFloat((row['x1'] || '').trim());
   const y = parseFloat((row['z1'] || '').trim());
   const x2 = parseFloat((row['x2'] || '').trim());
   const y2 = parseFloat((row['z2'] || '').trim());
-  console.log(y2)
 
   if (!isNaN(x) && !isNaN(y)) {
     pointMap[art] = pointMap[art] || { x: [], y: [], text: [], name: art };
@@ -49,9 +46,9 @@ const pointTraces = Object.values(pointMap).map(group => ({
 
 const layout = {
   title: 'POIs and Their Connections',
-  xaxis: { title: 'x' },
-  yaxis: { title: 'z' },
-  showlegend: true,
+  xaxis: { title: 'x', zeroline: false },
+  yaxis: { title: 'z' , autorange: "reversed", zeroline: false},
+  showlegend: true
 };
 
 
