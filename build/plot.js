@@ -54,6 +54,5 @@ const layout = {
   showlegend: true,
 };
 
-console.log(lines)
 
-Plotly.newPlot('plot', [...lines, ...pointTraces], layout);
+Plotly.newPlot('plot', [...lines, ...pointTraces], layout, {scrollZoom: true});
