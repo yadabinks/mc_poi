@@ -1,49 +1,59 @@
-// Utility: Treat empty/NA as null
-function clean(value) {
-  return value === '' || value === 'NA' ? null : value;
-}
+// Example value of precsvData:
+// const precsvData = `name1,art1,x1,z1,name2,art2,x2,z2\nNether Hub,NetherHub,-95,-113,Nether Hub,NetherHub,-95,-113\n...`;
 
-// Grouping points by 'Art' for color separation
-function groupBy(array, key) {
-  return array.reduce((acc, obj) => {
-    const val = obj[key] || 'Unknown';
-    acc[val] = acc[val] || [];
-    acc[val].push(obj);
-    return acc;
-  }, {});
-}
+const parsed = Papa.parse(precsvData.trim(), { header: true });
+const rows = parsed.data;
+console.log(rows)
 
-// Load CSV with PapaParse and Plot with Plotly
-fetch('data.csv')
-  .then(response => response.text())
-  .then(csvText => {
-    const parsed = Papa.parse(csvText, { header: true });
-    const data = parsed.data.map(row => ({
-      name: row['Kurzname'],
-      art: row['Art'],
-      x: parseFloat(row['x-Koordinate']),
-      y: parseFloat(row['y-Koordinate']),
-    })).filter(p => !isNaN(p.x) && !isNaN(p.y));
 
-    const grouped = groupBy(data, 'art');
+const pointMap = {}; // group by art1
+const lines = [];
 
-    const traces = Object.entries(grouped).map(([art, points]) => ({
-      x: points.map(p => p.x),
-      y: points.map(p => p.y),
-      text: points.map(p => p.name),
-      mode: 'markers+text',
+rows.forEach(row => {
+  console.log(row)
+  const name = (row['name1'] || '').trim();
+  const art = (row['art1'] || '').trim();
+  const x = parseFloat((row['x1'] || '').trim());
+  const y = parseFloat((row['z1'] || '').trim());
+  const x2 = parseFloat((row['x2'] || '').trim());
+  const y2 = parseFloat((row['z2'] || '').trim());
+  console.log(y2)
+
+  if (!isNaN(x) && !isNaN(y)) {
+    pointMap[art] = pointMap[art] || { x: [], y: [], text: [], name: art };
+    pointMap[art].x.push(x);
+    pointMap[art].y.push(y);
+    pointMap[art].text.push(name);
+  }
+
+  if (!isNaN(x) && !isNaN(y) && !isNaN(x2) && !isNaN(y2)) {
+    lines.push({
+      x: [x, x2],
+      y: [y, y2],
+      mode: 'lines',
       type: 'scatter',
-      name: art,
-      textposition: 'top center',
-      marker: { size: 12 },
-    }));
+      line: { color: 'gray', width: 1 },
+      hoverinfo: 'none',
+      showlegend: false
+    });
+  }
+});
 
-    const layout = {
-      title: 'POIs by Coordinates',
-      xaxis: { title: 'x-Koordinate' },
-      yaxis: { title: 'y-Koordinate' },
-      legend: { title: { text: 'Art' } }
-    };
+const pointTraces = Object.values(pointMap).map(group => ({
+  ...group,
+  mode: 'markers+text',
+  type: 'scatter',
+  textposition: 'top center',
+  marker: { size: 10 },
+}));
 
-    Plotly.newPlot('plot', traces, layout);
-  });
+const layout = {
+  title: 'POIs and Their Connections',
+  xaxis: { title: 'x' },
+  yaxis: { title: 'z' },
+  showlegend: true,
+};
+
+console.log(lines)
+
+Plotly.newPlot('plot', [...lines, ...pointTraces], layout);

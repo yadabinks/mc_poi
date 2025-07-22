@@ -3,68 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <title>POI Plot (Embedded Data)</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
   <script src="data.js"></script>
 </head>
 <body>
-  <h1>Points of Interest (POI)</h1>
+  <h1>POIs and Connections</h1>
   <div id="plot" style="width:100%; height:700px;"></div>
+  <script src="plot.js"></script>
 
-  <script>
-    // Embedded CSV as string (manually pasted from export)
-    const csvData = precsvData.trim();
-
-    // Parse CSV into array of objects
-    function parseCSV(csv) {
-      const [headerLine, ...lines] = csv.split('\n');
-      const headers = headerLine.split(',');
-      return lines.map(line => {
-        const values = line.split(',');
-        return headers.reduce((obj, h, i) => {
-          obj[h.trim()] = values[i] ? values[i].trim() : '';
-          return obj;
-        }, {});
-      });
-    }
-
-    function clean(value) {
-      return value === '' || value === 'NA' ? null : value;
-    }
-
-    const rawData = parseCSV(csvData);
-    const data = rawData.map(row => ({
-      name: row['Kurzname'],
-      art: row['Art'],
-      x: parseFloat(row['x-Koordinate']),
-      z: parseFloat(row['z-Koordinate']),
-    })).filter(p => !isNaN(p.x) && !isNaN(p.z));
-
-    const grouped = data.reduce((acc, point) => {
-      const key = point.art || 'Unknown';
-      acc[key] = acc[key] || [];
-      acc[key].push(point);
-      return acc;
-    }, {});
-
-    const traces = Object.entries(grouped).map(([art, points]) => ({
-      x: points.map(p => p.x),
-      z: points.map(p => p.z),
-      text: points.map(p => p.name),
-      mode: 'markers+text',
-      type: 'scatter',
-      name: art,
-      textposition: 'top center',
-      marker: { size: 12 },
-    }));
-
-    const layout = {
-      title: 'POIs by Coordinates',
-      xaxis: { title: 'x-Koordinate' },
-      zaxis: { title: 'z-Koordinate' },
-      legend: { title: { text: 'Art' } }
-    };
-
-    Plotly.newPlot('plot', traces, layout);
-  </script>
 </body>
 </html>
