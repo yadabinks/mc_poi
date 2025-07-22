@@ -46,10 +46,28 @@ const pointTraces = Object.values(pointMap).map(group => ({
 
 const layout = {
   title: 'POIs and Their Connections',
-  xaxis: { title: 'x', zeroline: false },
-  yaxis: { title: 'z' , autorange: "reversed", zeroline: false},
+  xaxis: {
+    title: {
+      text: 'x',
+      font: {
+        family: 'Courier New, monospace',
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }, zeroline: false
+  },
+  yaxis: {
+    title: {
+      text: 'z',
+      font: {
+        family: 'Courier New, monospace',
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }, autorange: "reversed", zeroline: false
+  },
   showlegend: true
 };
 
 
-Plotly.newPlot('plot', [...lines, ...pointTraces], layout, {scrollZoom: true});
+Plotly.newPlot('plot', [...lines, ...pointTraces], layout, { scrollZoom: true });
